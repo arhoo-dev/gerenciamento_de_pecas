@@ -1,3 +1,250 @@
+# Digital Automation Challenge: Parts Management, Quality Control and Storage
+
+This project is a Python prototype that simulates a **production, quality control, and storage** system for parts in an industrial assembly line.
+
+The system allows you to register parts, automatically evaluate whether they are approved or rejected according to predefined criteria, store approved parts in boxes with limited capacity, and generate consolidated reports.
+
+---
+
+## 1. System Objective 🎯
+
+The goal of this project is to logically represent how automation can support **quality control** and **storage management** of parts in an industrial environment.
+
+The Python system is capable of:
+
+- Receiving data for each produced part:
+  - `id`
+  - `weight` (in grams)
+  - `color`
+  - `length` (in centimeters)
+- Automatically evaluating whether the part is **approved** or **rejected**, based on the criteria:
+  - Weight between **95g and 105g**
+  - Color **blue** or **green**
+  - Length between **10cm and 20cm**
+- Storing **approved parts** in **boxes** with a capacity of **10 parts per box**
+- Closing a box when it reaches its maximum capacity and starting a new one
+- Generating reports with:
+  - Total approved parts
+  - Total rejected parts and their rejection reasons
+  - Total number of boxes used
+
+---
+
+## 2. Menu Features 📋
+
+The program provides an **interactive menu**, displayed in the terminal, with the following options:
+
+1. **Register new part**  
+   - Asks for the part data (id, weight, color, length)  
+   - Automatically evaluates if the part is approved or rejected  
+   - If approved, sends it to the box management logic
+
+2. **List approved/rejected parts**  
+   - Allows you to choose between:
+     - List only approved parts
+     - List only rejected parts (including reasons)
+     - List all parts
+
+3. **Remove registered part**  
+   - Allows you to enter a **part ID** to remove it:
+     - Removes the part from the main list
+     - If it was approved, it is also removed from the box where it is stored (current box or a closed box)
+
+4. **List closed boxes**  
+   - Displays all closed boxes
+   - For each box, shows:
+     - Box number
+     - Number of parts
+     - IDs of the parts stored in it
+
+5. **Generate final report**  
+   - Shows:
+     - Total registered parts
+     - Total approved parts
+     - Total rejected parts
+     - Rejection reason(s) for each rejected part
+     - Total number of boxes used
+     - How many boxes are closed and how many parts are in the current (open) box
+
+0. **Exit**  
+   - Ends the program execution
+
+---
+
+## 3. Project Structure 🧱
+
+Suggested file structure:
+
+```text
+.
+├── main.py      # Main file with the system's source code
+├── README.md    # This file
+```
+
+> Note: If you want, you can organize the code into multiple files (for example, separating functions into modules), but that is not required for this project.
+
+---
+
+## 4. How to Run the Program ▶️
+
+### 4.1. Prerequisites
+
+- Python 3 installed on your machine  
+  - To check, run in the terminal:
+
+    ```bash
+    python --version
+    ```
+    or
+
+    ```bash
+    python3 --version
+    ```
+
+- A terminal or command prompt (PowerShell, CMD, VS Code integrated terminal, etc.)
+
+### 4.2. Step-by-step execution
+
+1. **Clone the repository** (or download the files)
+
+   If the project is hosted on GitHub, run:
+
+   ```bash
+   git clone <REPOSITORY_URL>
+   ```
+
+   Then, go into the project folder:
+
+   ```bash
+   cd project-folder-name
+   ```
+
+2. **Run the program**
+
+   In the terminal, from the folder where `main.py` is located, run:
+
+   ```bash
+   python main.py
+   ```
+   or, depending on your system configuration:
+
+   ```bash
+   python3 main.py
+   ```
+
+3. **Use the menu**
+
+   The main menu will be displayed in the terminal, and you can select options by typing the corresponding number.
+
+---
+
+## 5. Example Execution 💻
+
+Below is a simplified example of how the system can be used.
+
+### 5.1. Registering parts
+
+1. The user selects option **1 – Register new part** and enters:
+
+   - ID: `P001`  
+   - Weight: `100`  
+   - Color: `blue`  
+   - Length: `15`
+
+   The system evaluates:
+
+   - Weight within range (95 to 105)  
+   - Valid color (blue/green)  
+   - Length within range (10 to 20)
+
+   Result:
+   - Part `P001` is **approved** and stored in the current box.
+
+2. The user registers a second part:
+
+   - ID: `P002`  
+   - Weight: `90`  
+   - Color: `red`  
+   - Length: `25`
+
+   The system evaluates:
+
+   - Weight out of range  
+   - Invalid color  
+   - Length out of range
+
+   Result:
+   - Part `P002` is **rejected**, with all rejection reasons displayed.
+
+### 5.2. Listing parts
+
+When selecting option **2 – List approved/rejected parts**:
+
+- If the user chooses **“List only approved”**, they will see something like:
+
+  - `ID: P001 | Weight: 100g | Color: blue | Length: 15cm`
+
+- If the user chooses **“List only rejected”**, they will see, for example:
+
+  - `ID: P002 | Weight: 90g | Color: red | Length: 25cm`  
+    `Rejection reason: weight out of range (...); invalid color (...); length out of range (...)`
+
+### 5.3. Box closing logic
+
+When the **current box reaches 10 approved parts**, the system:
+
+- Informs that the box has reached maximum capacity
+- “Closes” this box by moving it to the `closed_boxes` list
+- Automatically starts a new empty box
+
+### 5.4. Final report
+
+When selecting option **5 – Generate final report**, the system shows, for example:
+
+- Total registered parts: `12`  
+- Total approved parts: `10`  
+- Total rejected parts: `2`  
+- Details of the rejected parts with their reasons  
+- Number of boxes used: `2` (1 closed + 1 currently in use)  
+- Closed boxes: `1`  
+- Parts in the current (open) box: `0` or another number, depending on usage
+
+---
+
+## 6. Technologies and Concepts Used 🧠
+
+- **Language:** Python 3  
+- **Core concepts of Algorithms and Programming Logic:**
+  - Decision structures: `if`, `elif`, `else`
+  - Loop structures: `while`, `for`
+  - Functions for code modularization
+  - Data structures:
+    - Dictionaries to represent parts
+    - Lists to store collections of parts and boxes
+
+---
+
+## 7. Possible Improvements and Extensions 🚀
+
+This prototype could be expanded for a real industrial scenario by integrating:
+
+- **Physical sensors** for automatic reading of weight, color, and length  
+- **Computer vision and AI** for visual defect detection and advanced quality analysis  
+- **Integration with industrial systems (MES/ERP)** to:
+  - Record production in real time
+  - Update inventory of approved parts
+  - Generate dashboards and performance indicators
+
+---
+
+## 8. Author 👨‍💻
+
+- Name: _Adriel Ogawa Osório_  
+- Course: _AI and Digital Automation_  
+- Subject: Algorithms and Programming Logic  
+- Instructor: _André Noel_  
+- GitHub Repository: _[Project repository](https://github.com/arhoo-dev/gerenciamento_de_pecas)_
+
 # Desafio de Automação Digital: Gestão de Peças, Qualidade e Armazenamento
 
 Este projeto é um protótipo em Python que simula um sistema de **controle de produção, qualidade e armazenamento** de peças em uma linha de montagem industrial.
